@@ -1,4 +1,4 @@
-# This module contains Spring Boot AI sample projects.
+# Spring AI: Ollama
 
 This sample project covers the following
 1. Downloading LLM and embedding models. 
