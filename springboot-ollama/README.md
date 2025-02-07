@@ -2,9 +2,9 @@
 
 This sample project covers the following
 1. Downloading LLM and embedding models. 
-2. Downloading PGVectorStore
-3. Reading a sample PDF to insert to the vectorStore to be used by Retrieval Augmenting Generation
-4. Communicating with the AI model using chat client with QuestionAnswerAdvisor
+2. Downloading PGVectorStore.
+3. Reading a sample PDF to insert to the vectorStore to be used by Retrieval Augmenting Generation.
+4. Communicating with the AI model using chat client with QuestionAnswerAdvisor.
 
 ## AI Model
 This example uses `llama2` model
