@@ -18,7 +18,9 @@ This example uses dedicated embedding model `mxbai-embed-large`
 docker compose up
 
 # To explicitly download specific AI model
-docker exec -it ollama ollama run mxbai-embed-large
 docker exec -it ollama ollama run llama2
 docker exec -it ollama ollama run deepseek-r1
+
+# To download embedding model
+docker exec -it ollama ollama run mxbai-embed-large
 ```
