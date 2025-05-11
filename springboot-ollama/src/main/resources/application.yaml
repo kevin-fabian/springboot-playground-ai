@@ -3,29 +3,14 @@ server:
 spring:
   application:
     name: springboot-ollama
-  datasource:
-    url: jdbc:postgresql://localhost:5431/chat-ai-db
-    username: chat-ai-user
-    password: chat-ai-user
   ai:
     ollama:
       base-url: http://localhost:11434
-      model: llama2
-      chat.options.model: llama2
-    vectorstore:
-      pgvector:
-        initialize-schema: true
-        remove-existing-vector-store-table: false
-        index-type: HNSW
-        distance-type: COSINE_DISTANCE
-        dimensions: 1024
-        batching-strategy: TOKEN_COUNT # Optional: Controls how documents are batched for embedding
-        max-document-batch-size: 10000 # Optional: Maximum number of documents per batch
-
-documents:
-  directory:
-    path: 'springboot-ai\springboot-ollama\sample-pdf-files'
-
+      chat:
+        options:
+          model: gemma3:1b-it-qat
+          temperature: 0.1
+          max-tokens: 512
 logging:
   level:
     org.springframework.ai.chat.client.advisor: DEBUG

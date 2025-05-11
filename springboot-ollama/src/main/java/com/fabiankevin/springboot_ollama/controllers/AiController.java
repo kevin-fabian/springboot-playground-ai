@@ -1,5 +1,6 @@
 package com.fabiankevin.springboot_ollama.controllers;
 
+import com.fabiankevin.springboot_ollama.services.AssistantService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
@@ -15,34 +16,19 @@ import reactor.core.publisher.Flux;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/v1/api/ai/generation")
+@RequestMapping("/v1/api/ai/assistant")
 @RequiredArgsConstructor
 @Slf4j
 public class AiController {
-    private final ChatClient chatClient;
-    private final VectorStore vectorStore;
+    private final AssistantService assistantService;
 
-    @GetMapping
-    public Map<String, String> generate(@RequestParam("message") String message) {
-        log.info("Receive a request with a message = {}", message);
-
-        return Map.of("completion", chatClient.prompt()
-                .advisors(new SimpleLoggerAdvisor())
-//                        .advisors(new MessageChatMemoryAdvisor(new InMemoryChatMemory()))
-//                        .advisors(new PromptChatMemoryAdvisor(new InMemoryChatMemory()))
-                .advisors(new QuestionAnswerAdvisor(vectorStore))
-                .user(message)
-                .call()
-                .content());
-    }
-
-    @GetMapping("/streaming")
-    public Flux<String> generateStream(@RequestParam(value = "message", defaultValue = "Tell me a joke") String message) {
-        log.info("Receive a request with a message = {}", message);
-
-        return chatClient.prompt()
-                .advisors(new SimpleLoggerAdvisor(), new QuestionAnswerAdvisor(vectorStore))
-                .user(message)
-                .stream().content();
-    }
+//    @GetMapping("/streaming")
+//    public Flux<String> generateStream(@RequestParam(value = "message", defaultValue = "Tell me a joke") String message) {
+//        log.info("Receive a request with a message = {}", message);
+//
+//        return chatClient.prompt()
+//                .advisors(new SimpleLoggerAdvisor(), new QuestionAnswerAdvisor(vectorStore))
+//                .user(message)
+//                .stream().content();
+//    }
 }

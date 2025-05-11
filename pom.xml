@@ -28,10 +28,12 @@
 		<url/>
 	</scm>
 	<properties>
-		<java.version>17</java.version>
+		<java.version>21</java.version>
 	</properties>
 	<modules>
 		<module>springboot-ollama</module>
+		<module>springboot-ollama-toolcallback-api</module>
+		<module>springboot-langchain4j-with-ollama</module>
 	</modules>
 
 </project>
