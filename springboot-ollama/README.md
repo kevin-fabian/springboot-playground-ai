@@ -16,7 +16,4 @@ docker exec -it ollama ollama run gemma3:1b-it-qat
 
 ## Embedding Model
 docker exec -it ollama ollama pull nomic-embed-text
-
-# To download embedding model
-docker exec -it ollama ollama run mxbai-embed-large
 ```
