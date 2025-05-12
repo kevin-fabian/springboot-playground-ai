@@ -367,7 +367,6 @@ class PromptPatternTest {
         System.out.println("Final jugdement:"+finalClassification);
     }
 
-
     @Test
     public void pt_tree_of_thoughts_game() {
         // Step 1: Generate multiple initial moves
