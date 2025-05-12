@@ -1,10 +1,9 @@
 # Spring AI: Ollama
 
-## AI Model
-## Embedding Model
-This example uses dedicated embedding model `nomic-embed-text`
+This project contains multiple examples of using Spring AI with Ollama, a local LLM server. 
+The examples demonstrate various use cases, prompt patterns, RAG (retrieval-augmented generation), Tool calling and other features of Spring AI.
 
-## Command that you might use 
+## Common Commands Used
 ```bash
 # To run the docker compose file
 
