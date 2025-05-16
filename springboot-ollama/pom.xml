@@ -32,6 +32,7 @@
 	</properties>
 	<modules>
 		<module>prompt_examples</module>
+		<module>rag</module>
 	</modules>
 
 	<build>

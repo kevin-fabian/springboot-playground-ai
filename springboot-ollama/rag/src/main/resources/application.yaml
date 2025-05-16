@@ -1,0 +1,26 @@
+server:
+  port: 8085
+spring:
+  application:
+    name: springboot-ollama
+  ai:
+    ollama:
+      base-url: http://localhost:11434
+      chat:
+        options:
+          model: gemma3:1b-it-qat
+          temperature: 0.1
+          max-tokens: 512
+      embedding:
+        options:
+          model: nomic-embed-text
+
+vector-store:
+  file-store: ./vector-store.json
+
+logging:
+  level:
+    com.fabiankevin.rag: DEBUG
+    org.springframework.ai.chat.client.advisor: DEBUG
+
+
