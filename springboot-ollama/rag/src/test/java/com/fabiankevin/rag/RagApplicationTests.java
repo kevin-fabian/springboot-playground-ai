@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.messages.AssistantMessage;
 import org.springframework.ai.chat.messages.UserMessage;
+import org.springframework.ai.chat.prompt.ChatOptions;
 import org.springframework.ai.rag.Query;
 import org.springframework.ai.rag.preretrieval.query.expansion.MultiQueryExpander;
 import org.springframework.ai.rag.preretrieval.query.transformation.CompressionQueryTransformer;
@@ -32,16 +33,21 @@ class RagApplicationTests {
     void compressionQueryTransformer(){
         Query query = Query.builder()
                 .text("And what is its second largest city?")
-                .history(new UserMessage("What is the capital of Denmark?"),
-                        new AssistantMessage("Copenhagen is the capital of Denmark."))
+                .history(new UserMessage("What is the capital of the Philippines?"),
+                        new AssistantMessage("Manila is the capital of the Philippines."))
                 .build();
 
         QueryTransformer queryTransformer = CompressionQueryTransformer.builder()
-                .chatClientBuilder(chatClientBuilder)
+                .chatClientBuilder(chatClientBuilder.defaultOptions(
+                       ChatOptions.builder()
+                               .model("gemma3:4b-it-qat")
+                               .temperature(0.7)
+                               .build()
+                ))
                 .build();
 
         Query transformedQuery = queryTransformer.transform(query);
-        assertEquals("Copenhagen’s second largest city is Odense.", transformedQuery.text().trim());
+        assertEquals("What is the second largest city in the Philippines?", transformedQuery.text().trim());
         System.out.println(transformedQuery.text());
     }
 
