@@ -10,7 +10,7 @@ spring:
         options:
           model: llama3.2:3b
 #          model: gemma3:4b-it-qat
-          temperature: 0.1
+          temperature: 0.0
 #          max-tokens: 1024
 
 logging:

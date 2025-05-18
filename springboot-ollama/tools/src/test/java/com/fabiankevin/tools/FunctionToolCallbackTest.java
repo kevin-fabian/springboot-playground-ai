@@ -1,5 +1,7 @@
 package com.fabiankevin.tools;
 
+import com.fabiankevin.tools.services.WeatherService;
+import com.fabiankevin.tools.services.dto.WeatherRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.ai.chat.client.ChatClient;
@@ -7,18 +9,26 @@ import org.springframework.ai.tool.ToolCallback;
 import org.springframework.ai.tool.function.FunctionToolCallback;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 
 import java.util.function.Function;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @SpringBootTest
 class FunctionToolCallbackTest {
     @Autowired
     private ChatClient chatClient;
+    @Autowired
+    @MockitoSpyBean
+    private WeatherService weatherService;
 
     @Test
-    void test() {
+    void askWeather_thenShouldInvokeWeatherFunction() {
         ToolCallback toolCallback = FunctionToolCallback
-                .builder("currentWeather", new WeatherService())
+                .builder("currentWeather", weatherService)
                 .description("Get the weather in location")
                 .inputType(WeatherRequest.class)
                 .build();
@@ -29,19 +39,6 @@ class FunctionToolCallbackTest {
                 .content();
 
         System.out.println("Result: "+content);
-    }
-
-}
-
-
-@Slf4j
-class WeatherService implements Function<WeatherRequest, WeatherResponse> {
-    public WeatherResponse apply(WeatherRequest request) {
-        log.info("WeatherRequest: {}", request);
-        return new WeatherResponse(30.0, Unit.C);
+        verify(weatherService, times(1)).apply(any());
     }
 }
-
-enum Unit {C, F}
-record WeatherRequest(String location, Unit unit) {}
-record WeatherResponse(double temp, Unit unit) {}

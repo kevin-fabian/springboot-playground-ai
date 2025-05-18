@@ -11,7 +11,6 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
 
 @Component
-@Description("Tools for dealing with date and time")
 @Slf4j
 public class DateTimeTools {
 
