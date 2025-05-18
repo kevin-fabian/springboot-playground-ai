@@ -2,7 +2,6 @@ package com.fabiankevin.tools;
 
 import com.fabiankevin.tools.services.WeatherService;
 import com.fabiankevin.tools.services.dto.WeatherRequest;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.tool.ToolCallback;
@@ -10,8 +9,6 @@ import org.springframework.ai.tool.function.FunctionToolCallback;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
-
-import java.util.function.Function;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
@@ -26,7 +23,7 @@ class FunctionToolCallbackTest {
     private WeatherService weatherService;
 
     @Test
-    void askWeather_thenShouldInvokeWeatherFunction() {
+    void shouldCallWeatherFunction() {
         ToolCallback toolCallback = FunctionToolCallback
                 .builder("currentWeather", weatherService)
                 .description("Get the weather in location")

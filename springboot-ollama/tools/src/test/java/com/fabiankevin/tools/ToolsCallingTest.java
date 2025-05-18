@@ -1,11 +1,9 @@
 package com.fabiankevin.tools;
 
 import com.fabiankevin.tools.tools.DateTimeTools;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.model.ChatModel;
-import org.springframework.ai.chat.prompt.ChatOptions;
-import org.springframework.ai.chat.prompt.DefaultChatOptionsBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -18,6 +16,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @SpringBootTest
+@Slf4j
 class ToolsCallingTest {
     @Autowired
     private ChatClient chatClient;
@@ -26,9 +25,8 @@ class ToolsCallingTest {
     @Autowired
     private DateTimeTools dateTimeTools;
 
-
     @Test
-    void whenAskAboutDateTime_thenShouldInvokeGetCurrentDateTimeMethod() {
+    void shouldICallGetCurrentDateTimeMethod() {
         System.out.println(LocalDateTime.now().atZone(LocaleContextHolder.getTimeZone().toZoneId()).toString());
 
         String result = chatClient.prompt("What day is tomorrow?")
@@ -36,8 +34,9 @@ class ToolsCallingTest {
                 .system("Response with answer only.")
                 .call()
                 .content();
-        System.out.println(result);
-//
+
+        log.info("Result: {}", result);
+
         verify(dateTimeTools, times(1)).getCurrentDateTime();
     }
 
@@ -66,7 +65,7 @@ class ToolsCallingTest {
                 .tools(dateTimeTools)
                 .call()
                 .content();
-        System.out.println(result);
+        log.info("Result: {}", result);
 
         verify(dateTimeTools, times(1)).getCurrentDateTime();
         verify(dateTimeTools, times(1)).setAlarm(any());
