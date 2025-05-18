@@ -33,6 +33,7 @@
 	<modules>
 		<module>prompt_examples</module>
 		<module>rag</module>
+		<module>tools</module>
 	</modules>
 
 	<build>
