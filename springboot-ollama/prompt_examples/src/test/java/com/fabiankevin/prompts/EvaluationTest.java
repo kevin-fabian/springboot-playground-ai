@@ -5,21 +5,15 @@ import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.QuestionAnswerAdvisor;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.ChatOptions;
-import org.springframework.ai.document.Document;
 import org.springframework.ai.evaluation.EvaluationRequest;
 import org.springframework.ai.evaluation.EvaluationResponse;
 import org.springframework.ai.evaluation.FactCheckingEvaluator;
 import org.springframework.ai.evaluation.RelevancyEvaluator;
-import org.springframework.ai.model.Content;
-import org.springframework.ai.vectorstore.SearchRequest;
-import org.springframework.ai.vectorstore.SimpleVectorStore;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -43,7 +37,8 @@ public class EvaluationTest {
         ChatResponse response = chatClient.prompt()
                 .advisors(new QuestionAnswerAdvisor(vectorStore))
                 .options(ChatOptions.builder()
-                        .model("gemma3:4b-it-qat")
+                        .model("deepseek-r1:1.5b-qwen-distill-q4_K_M")
+                        .temperature(0.1)
                         .build())
                 .user(userText)
                 .call()

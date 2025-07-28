@@ -14,6 +14,7 @@ docker exec -it ollama ollama run gemma3:4b-it-qat
 docker exec -it ollama ollama run gemma3:1b-it-qat
 docker exec -it ollama ollama run llama3.1:8b
 docker exec -it ollama ollama run llama3.2:3b
+docker exec -it ollama ollama run deepseek-r1:1.5b-qwen-distill-q4_K_M
 
 ## Embedding Model
 docker exec -it ollama ollama pull nomic-embed-text

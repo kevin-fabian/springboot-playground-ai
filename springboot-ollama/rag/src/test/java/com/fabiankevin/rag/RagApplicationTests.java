@@ -56,7 +56,12 @@ class RagApplicationTests {
         Query query = new Query("I'm running. What is the purpose of LLM?");
 
         QueryTransformer queryTransformer = RewriteQueryTransformer.builder()
-                .chatClientBuilder(chatClientBuilder)
+                .chatClientBuilder(chatClientBuilder.defaultOptions(
+                        ChatOptions.builder()
+                                .model("deepseek-r1:1.5b-qwen-distill-q4_K_M")
+                                .temperature(0.7)
+                                .build()
+                ))
                 .build();
 
         Query transformedQuery = queryTransformer.transform(query);

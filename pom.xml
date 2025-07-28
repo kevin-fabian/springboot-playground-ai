@@ -31,7 +31,7 @@
 		<java.version>21</java.version>
 	</properties>
 	<modules>
-		<module>springboot-ollama</module>
+		<module>springboot-spring_ai-ollama</module>
 		<module>springboot-ollama-toolcallback-api</module>
 		<module>springboot-langchain4j-with-ollama</module>
 	</modules>

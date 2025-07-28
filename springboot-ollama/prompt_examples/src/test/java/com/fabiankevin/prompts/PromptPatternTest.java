@@ -19,6 +19,10 @@ class PromptPatternTest {
     @Autowired
     private ChatClient chatClient;
 
+    @Autowired
+    private ChatClient.Builder chatClientBuilder;
+
+
     public record ActorFilms(String actor, List<String> movies) {}
 
 

@@ -1,0 +1,15 @@
+# Using spring-ai-starter-mcp-server-webmvc
+spring:
+  ai:
+    mcp:
+      server:
+        name: spring-ai-mcp-starter-webmvc-server
+        version: 1.0.0
+        type: SYNC
+        instructions: "This server provides weather information tools and resources"
+        sse-message-endpoint: /mcp/messages
+        capabilities:
+          tool: true
+          resource: true
+          prompt: true
+          completion: true
