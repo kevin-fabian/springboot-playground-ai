@@ -7,8 +7,12 @@ import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.chat.request.ResponseFormat;
 import dev.langchain4j.model.input.structured.StructuredPrompt;
 import dev.langchain4j.model.ollama.OllamaChatModel;
+import dev.langchain4j.model.output.FinishReason;
+import dev.langchain4j.model.output.TokenUsage;
 import dev.langchain4j.model.output.structured.Description;
+import dev.langchain4j.rag.content.Content;
 import dev.langchain4j.service.*;
+import dev.langchain4j.service.tool.ToolExecution;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -114,6 +118,11 @@ class _05_AIServices {
         }
 
         public static void main(String[] args) {
+            ChatModel model = OllamaChatModel.builder()
+                    .baseUrl("http://localhost:11434")
+                    .modelName(OllamaAIModel.GEMMA3_4B_IT_QAT)
+                    .temperature(0.1)
+                    .build();
 
             SentimentAnalyzer sentimentAnalyzer = AiServices.create(SentimentAnalyzer.class, model);
 
@@ -122,6 +131,9 @@ class _05_AIServices {
 
             boolean positive = sentimentAnalyzer.isPositive("It is bad!");
             System.out.println(positive); // false
+
+            Sentiment result = sentimentAnalyzer.analyzeSentimentOf("I love to go to the beach!");
+            System.out.println("I love to go to the beach! " + result); // false
         }
     }
 
@@ -257,7 +269,8 @@ class _05_AIServices {
 
         static class Person {
 
-            @Description("first name of a person") // you can add an optional description to help an LLM have a better understanding
+            @Description("first name of a person")
+            // you can add an optional description to help an LLM have a better understanding
             private String firstName;
             private String lastName;
             private LocalDate birthDate;
@@ -279,6 +292,12 @@ class _05_AIServices {
         }
 
         public static void main(String[] args) {
+            ChatModel model = OllamaChatModel.builder()
+                    .baseUrl("http://localhost:11434")
+                    .modelName(OllamaAIModel.GEMMA3_4B_IT_QAT)
+                    .temperature(0.1)
+                    .responseFormat(ResponseFormat.JSON)
+                    .build();
             PersonExtractor extractor = AiServices.create(PersonExtractor.class, model);
 
             String text = "In 1968, amidst the fading echoes of Independence Day, "
@@ -435,6 +454,30 @@ class _05_AIServices {
 
             String translation = utils.translate("Hello, how are you?", "italian");
             System.out.println(translation); // Ciao, come stai?
+        }
+    }
+
+
+    static class AI_Assistant_Result_ReturnType {
+        interface Assistant {
+            @UserMessage("Generate an outline for the article on the following topic: {{it}}")
+            Result<List<String>> generateOutlineFor(String topic);
+        }
+
+        public static void main(String[] args) {
+            Assistant assistant = AiServices.create(Assistant.class, model);
+            Result<List<String>> result = assistant.generateOutlineFor("Java");
+
+            List<String> outline = result.content();
+            TokenUsage tokenUsage = result.tokenUsage();
+            List<Content> sources = result.sources();
+            List<ToolExecution> toolExecutions = result.toolExecutions();
+            FinishReason finishReason = result.finishReason();
+            System.out.println("Outline: " + outline);
+            System.out.println("Token Usage: " + tokenUsage);
+            System.out.println("Sources: " + sources);
+            System.out.println("Tool Executions: " + toolExecutions);
+            System.out.println("Finish Reason: " + finishReason);
         }
     }
 }

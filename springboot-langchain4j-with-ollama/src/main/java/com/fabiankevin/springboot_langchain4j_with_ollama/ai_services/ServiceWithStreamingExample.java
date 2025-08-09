@@ -31,9 +31,12 @@ public class ServiceWithStreamingExample {
 
         CompletableFuture<ChatResponse> futureResponse = new CompletableFuture<>();
 
-        tokenStream.onPartialResponse(System.out::print)
-                .onCompleteResponse(futureResponse::complete)
-                .onError(futureResponse::completeExceptionally)
+        tokenStream
+                .onPartialResponse(System.out::println)
+                .onRetrieved(System.out::println)
+                .onToolExecuted(System.out::println)
+                .onCompleteResponse(System.out::println)
+                .onError(Throwable::printStackTrace)
                 .start();
 
         ChatResponse chatResponse = futureResponse.get(10, SECONDS);
